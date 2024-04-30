@@ -11,7 +11,7 @@
 # Logout System sometimes works
 # Adding Item Finished
 # Delete Item Finished
-# Edit Item **in progress**
+# Edit Item Finished
 # Stock Notification Finished
 # Adding pictures to items **in progress**
 # Transaction for items **in progress**

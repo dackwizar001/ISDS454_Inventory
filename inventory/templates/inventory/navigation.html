@@ -6,6 +6,7 @@
 		</button>
 		<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
 			<ul class="navbar-nav">
+				# display differnt options if user is logged in or not
 				{% if user.is_authenticated %}
 					<li class="nav-item">
 						<a class="nav-link" href="#">{{ user.username }}</a>

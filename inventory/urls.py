@@ -3,6 +3,7 @@ from django.urls import path
 from .views import Index, SignUpView, Dashboard, AddItem, EditItem, DeleteItem
 from django.contrib.auth import views as auth_views
 
+#path to different pages or pop-up
 urlpatterns = [
     path('', Index.as_view(), name='index'),
     path('dashboard/', Dashboard.as_view(), name='dashboard'),

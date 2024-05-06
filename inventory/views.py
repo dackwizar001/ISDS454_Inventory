@@ -1,37 +1,43 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, View, CreateView, UpdateView, DeleteView
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import UserRegisterForm, InventoryItemForm
 from .models import InventoryItem, Category
 from inventory_management.settings import LOW_QUANTITY
 from django.contrib import messages
+from django.db.models import Q
 
 class Index(TemplateView):
 	template_name = 'inventory/index.html'
 
 class Dashboard(LoginRequiredMixin, View):
-	def get(self, request):
-		items = InventoryItem.objects.filter(user=self.request.user.id).order_by('id')
+    def get(self, request):
+        query = request.GET.get('q')
+        items = InventoryItem.objects.filter(user=self.request.user.id).order_by('id')
 
-		low_inventory = InventoryItem.objects.filter(
-			user=self.request.user.id,
-			quantity__lte=LOW_QUANTITY
-		)
+        if query:
+            items = items.filter(
+                Q(name__icontains=query) |
+                Q(id__icontains=query) |
+                Q(category__name__icontains=query)
+            ).distinct()
 
-		if low_inventory.count() > 0:
-			if low_inventory.count() > 1:
-				messages.error(request, f'{low_inventory.count()} items have low inventory')
-			else:
-				messages.error(request, f'{low_inventory.count()} item has low inventory')
+        low_inventory = items.filter(
+            quantity__lte=LOW_QUANTITY
+        )
 
-		low_inventory_ids = InventoryItem.objects.filter(
-			user=self.request.user.id,
-			quantity__lte=LOW_QUANTITY
-		).values_list('id', flat=True)
+        if low_inventory.count() > 0:
+            if low_inventory.count() > 1:
+                messages.error(request, f'{low_inventory.count()} items have low inventory')
+            else:
+                messages.error(request, f'{low_inventory.count()} item has low inventory')
 
-		return render(request, 'inventory/dashboard.html', {'items': items, 'low_inventory_ids': low_inventory_ids})
+        low_inventory_ids = low_inventory.values_list('id', flat=True)
+
+        return render(request, 'inventory/dashboard.html', {'items': items, 'low_inventory_ids': low_inventory_ids,'query':query})
+
 
 class SignUpView(View):
 	def get(self, request):

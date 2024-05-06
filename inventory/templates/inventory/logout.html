@@ -1,7 +1,9 @@
 {% extends 'inventory/base.html' %}
-{% load cripspy_forms_tag}
 
 {% block content %}
+<form method="post" action="{% url 'logout' %}">
+	{% csrf_token %}
+</form>
 	<div class="row">
 		<div class="col-11 col-md-4 mx-auto mt-5">
 			<h2>You Have Been Logged Out</h2>
@@ -9,7 +11,7 @@
 				<small class="text-muted">
 					<a href="{% url 'login' %}">Log In Again</a>
 				</small>
-			</div>
+			</div>'
 		</div>
 	</div>
 {% endblock content %}

@@ -6,15 +6,18 @@
 		</button>
 		<div class="collapse navbar-collapse justify-content-end" id="navbarNav">
 			<ul class="navbar-nav">
-				# display differnt options if user is logged in or not
 				{% if user.is_authenticated %}
 					<li class="nav-item">
 						<a class="nav-link" href="#">{{ user.username }}</a>
 					</li>
 
 					<li class="nav-item">
-						<a class="nav-link" href="{% url 'logout' %}">Sign Out</a>
-					</li>
+						<form id ="logout-form" action="{% url 'logout'%}" method="post">
+							<a class="nav-link" href="#" onclick="document.getElementById('logout-form').submit(); return false;"
+						>Sign Out</a>
+						{% csrf_token %}
+						</form>
+					</li
 				{% else %}
 					<li class="nav-item">
 						<a class="nav-link" href="{% url 'login' %}">Sign In</a>

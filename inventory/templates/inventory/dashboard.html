@@ -18,6 +18,15 @@
 	{% endif %}
 	<div class="row">
 		<div class="col-md-10 col-12 mx-auto mt-5">
+			<div class="mb-3">
+				<form method="GET" action="{% url 'dashboard' %}">
+					<div class="input-group">
+						<input type="text" class="form-control" name="q" placeholder="Search..." {% if query %}value="{{query}}"{% endif %}  aria-describedby="button-addon2">
+						<button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+					  </div>
+					
+				</form>
+			</div>
 			<div class="d-flex justify-content-end">
 				<a href="{% url 'add-item' %}" class="btn btn-primary">+</a>
 			</div>

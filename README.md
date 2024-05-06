@@ -8,11 +8,12 @@
 
 **Progress**:
 # Login System Finished
-# Logout System sometimes works
+# Logout System Finished
 # Adding Item Finished
 # Delete Item Finished
 # Edit Item Finished
 # Stock Notification Finished
+# Serach Item Finished
 # Adding pictures to items **in progress**
 # Transaction for items **in progress**
 # differentiation between buyer and employees account **in progress**
